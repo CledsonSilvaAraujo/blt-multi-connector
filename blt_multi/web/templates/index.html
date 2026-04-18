@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>blt-multi-connector</title>
+    <link rel="stylesheet" href="/static/style.css"/>
+    <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+</head>
+<body>
+    <header>
+        <h1>blt-multi-connector</h1>
+        <p class="subtitle">
+            Sink padrão atual: <code>{{ default_sink }}</code>
+            &middot; Combine-sink: <code>{{ settings.default_sink_name }}</code>
+        </p>
+    </header>
+
+    <section class="actions">
+        <form hx-post="/sync" hx-target="#devices" hx-swap="innerHTML">
+            <button class="primary" type="submit">Aplicar offsets &amp; Sync</button>
+        </form>
+        <form hx-post="/unsync">
+            <button type="submit">Desfazer combine-sink</button>
+        </form>
+        <form hx-post="/scan" hx-swap="none">
+            <label>Scan
+                <input type="number" name="duration" value="8" min="1" max="60" step="1"/> s
+            </label>
+            <button type="submit">Escanear</button>
+        </form>
+    </section>
+
+    <section id="devices"
+        hx-get="/partials/devices"
+        hx-trigger="every 5s"
+        hx-swap="innerHTML">
+        {% include "_devices.html" %}
+    </section>
+
+    <footer>
+        <small>
+            Offsets positivos atrasam a saída daquele dispositivo para alinhar com o mais lento.
+            A calibração precisa ser feita uma vez por dispositivo.
+        </small>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,182 @@
+:root {
+    color-scheme: dark light;
+    --bg: #0f1115;
+    --panel: #181b22;
+    --panel-2: #22262f;
+    --border: #2a2f3a;
+    --text: #e6e8ee;
+    --muted: #8b93a6;
+    --primary: #3b82f6;
+    --primary-fg: #ffffff;
+    --danger: #dc2626;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --cyan: #06b6d4;
+    --magenta: #c026d3;
+    --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 24px 80px;
+    max-width: 1100px;
+    margin-inline: auto;
+}
+
+header h1 {
+    font-size: 28px;
+    margin: 0 0 8px;
+}
+
+.subtitle {
+    color: var(--muted);
+    margin: 0 0 28px;
+}
+
+code {
+    background: var(--panel-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+    align-items: center;
+}
+
+.actions form {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+button {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font: inherit;
+}
+
+button:hover { background: var(--panel-2); }
+
+button.primary {
+    background: var(--primary);
+    color: var(--primary-fg);
+    border-color: var(--primary);
+    font-weight: 600;
+}
+
+button.danger {
+    background: transparent;
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+input[type="number"] {
+    width: 70px;
+    padding: 6px 8px;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font: inherit;
+}
+
+table.devices {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+table.devices th {
+    background: var(--panel-2);
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+}
+
+table.devices td {
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+tr.muted { opacity: 0.5; }
+
+.name { font-weight: 600; }
+
+.mac { color: var(--muted); font-size: 13px; }
+
+.tag {
+    display: inline-block;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-right: 4px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.tag.green { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--green); }
+.tag.yellow { background: color-mix(in srgb, var(--yellow) 20%, transparent); color: var(--yellow); }
+.tag.cyan { background: color-mix(in srgb, var(--cyan) 20%, transparent); color: var(--cyan); }
+.tag.magenta { background: color-mix(in srgb, var(--magenta) 20%, transparent); color: var(--magenta); }
+
+.offset-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.offset-form input[type="range"] {
+    accent-color: var(--primary);
+    width: 160px;
+}
+
+.offset-form output {
+    min-width: 48px;
+    text-align: right;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+}
+
+td.actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.empty {
+    color: var(--muted);
+    text-align: center;
+    padding: 36px;
+    background: var(--panel);
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+}
+
+footer {
+    margin-top: 32px;
+    color: var(--muted);
+    text-align: center;
+}

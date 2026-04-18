@@ -1,0 +1,24 @@
+[Unit]
+Description=blt-multi-connector daemon (BT multi-sink sync)
+Documentation=https://github.com/clebinho/blt-multi-connector
+After=pipewire.service pipewire-pulse.service wireplumber.service bluetooth.service
+Requires=pipewire.service pipewire-pulse.service wireplumber.service
+
+[Service]
+Type=simple
+# %h = home do usuário do systemd --user. Ajuste WorkingDirectory para onde
+# você clonou o repositório.
+WorkingDirectory=%h/uff/blt_multi_connector
+ExecStart=%h/.local/bin/uv run blt-multi daemon
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=10
+# Logs vão para journald do user.
+StandardOutput=journal
+StandardError=journal
+# Garante que a sessão do PulseAudio/PipeWire do usuário esteja acessível.
+Environment=PULSE_RUNTIME_PATH=%t/pulse
+Environment=XDG_RUNTIME_DIR=%t
+
+[Install]
+WantedBy=default.target

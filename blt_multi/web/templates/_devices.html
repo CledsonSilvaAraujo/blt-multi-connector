@@ -1,0 +1,66 @@
+{% if not rows %}
+    <p class="empty">Nenhum dispositivo registrado. Use <code>blt-multi pair</code> ou clique em "Escanear".</p>
+{% else %}
+<table class="devices">
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Nome / MAC</th>
+            <th>Offset (ms)</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in rows %}
+        <tr class="{{ 'muted' if not row.enabled else '' }}">
+            <td>
+                {% if row.connected %}<span class="tag green">conectado</span>{% endif %}
+                {% if row.paired and not row.connected %}<span class="tag yellow">pareado</span>{% endif %}
+                {% if row.has_sink %}<span class="tag cyan">sink</span>{% endif %}
+                {% if row.is_default %}<span class="tag magenta">default</span>{% endif %}
+            </td>
+            <td>
+                <div class="name">{{ row.name }}</div>
+                <div class="mac"><code>{{ row.mac }}</code></div>
+                {% if row.last_seen %}
+                <div class="mac"><small>visto {{ row.last_seen }}</small></div>
+                {% endif %}
+            </td>
+            <td>
+                <form hx-post="/devices/{{ row.mac }}/offset"
+                      hx-target="#devices" hx-swap="innerHTML"
+                      class="offset-form">
+                    <input type="range" name="offset_ms"
+                        min="-200" max="200" step="1"
+                        value="{{ row.offset_ms|round(0) }}"
+                        oninput="this.nextElementSibling.value=this.value">
+                    <output>{{ row.offset_ms|round(1) }}</output>
+                    <button type="submit">ok</button>
+                </form>
+            </td>
+            <td class="actions">
+                {% if row.connected %}
+                <form hx-post="/devices/{{ row.mac }}/disconnect"
+                      hx-target="#devices" hx-swap="innerHTML">
+                    <button type="submit">Desconectar</button>
+                </form>
+                {% else %}
+                <form hx-post="/devices/{{ row.mac }}/connect"
+                      hx-target="#devices" hx-swap="innerHTML">
+                    <button type="submit">Conectar</button>
+                </form>
+                {% endif %}
+                <form hx-post="/devices/{{ row.mac }}/enabled"
+                      hx-target="#devices" hx-swap="innerHTML">
+                    <button type="submit">{{ "Desativar" if row.enabled else "Ativar" }}</button>
+                </form>
+                <form method="post" action="/devices/{{ row.mac }}/forget"
+                      onsubmit="return confirm('Esquecer {{ row.mac }}?');">
+                    <button type="submit" class="danger">Esquecer</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}

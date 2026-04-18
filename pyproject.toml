@@ -1,0 +1,60 @@
+[project]
+name = "blt-multi-connector"
+version = "0.1.0"
+description = "Espelha áudio do sistema em múltiplos dispositivos Bluetooth (Linux + PipeWire + BlueZ) com offset de latência por MAC."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "clebinho" }]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "dbus-next>=0.2.3",
+    "tomlkit>=0.13",
+    "numpy>=1.26",
+    "sounddevice>=0.4.7",
+    "scipy>=1.12",
+    "prompt-toolkit>=3.0",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.9",
+]
+
+[project.scripts]
+blt-multi = "blt_multi.cli:app"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.12",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.4",
+    "mypy>=1.10",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["blt_multi"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "N"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-ra --strict-markers"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+ignore_missing_imports = true
